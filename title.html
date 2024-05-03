@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        /* CSS styles for the body */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            animation: changeBackground 50s infinite linear; /* Animation for transitioning background */
+            color: white; /* Set text color to white */
+        }
+
+        /* Keyframes for the background transition */
+        @keyframes changeBackground {
+            0% { background-image: url('alienx.png'); }
+            25% { background-image: url('alienx2.png'); }
+            50% { background-image: url('alienx3.png'); }
+            75% { background-image: url('alienx4.png'); }
+            100% { background-image: url('alienx.png'); }
+        }
+
+        /* Other styles */
+        h1 {
+            text-align: center;
+            padding: 20px;
+            font-weight: bold; /* Make h1 text bold */
+            color: rgb(10, 0, 104);
+        }
+
+        p {
+            padding: 10px;
+            font-weight: bold; /* Make paragraph text bold */
+        }
+
+        a {
+            text-decoration: none;
+            color: blue; /* Set link color to blue */
+        }
+
+        h2 {
+            font-weight: bold; /* Make h2 text bold */
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome message -->
+    <h1>Welcome to AIExperience!</h1>
+
+    <!-- Description -->
+    <p>Click on the title to go to the next page.</p>
+    <p>This is where you can chat with AI for stuff you need help with and has a fraud detection.</p>
+
+    <!-- Link to the next page -->
+    <a href="index.html">
+        <h2>Click me to continue</h2>
+    </a>
+</body>
+</html>

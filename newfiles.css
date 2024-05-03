@@ -1,0 +1,52 @@
+/* styles.css */
+
+/* Resetting default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+/* Heading styles */
+h1 {
+    color: #3f0061;
+    text-align: center;
+}
+
+/* Container styles */
+.issue {
+    margin-bottom: 20px;
+    border: 1px solid #000000;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Heading inside the container */
+.issue h2 {
+    margin-top: 0;
+}
+
+/* Input, textarea, and button styles */
+.issue input,
+.issue textarea,
+.issue button {
+    margin: 5px auto;
+    display: block;
+}
+
+/* Warning message styles */
+.warning-message {
+    background-color: #ffcccc;
+    color: #ff0000;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+}
