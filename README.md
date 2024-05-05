@@ -1,6 +1,8 @@
-Currnent Progress
+Currnent Progress![AIExperience_ba-style@nulla top](https://github.com/Vig270/ScienceAiProject/assets/138379504/886ef1c1-04d5-4dbf-b2dd-6eecc0426ffa)
+
 
 This is an AIExperience that allows you to determine which issue is which. 
+
 
 here are some examples: (these emails are fake and testing purpose, you can write any email you want) 
 
