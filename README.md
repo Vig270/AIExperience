@@ -2,7 +2,7 @@ Currnent Progress
 
 This is an AIExperience that allows you to determine which issue is which. 
 
-here are some examples:
+here are some examples: (these emails are fake and testing purpose, you can write any email you want) 
 
 
 Name: John
