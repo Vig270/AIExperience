@@ -1,8 +1,9 @@
-import datetime
 import logging
 import requests
+import datetime  # Import datetime module
 from flask import Flask, request, render_template, jsonify
 from transformers import pipeline
+
 
 app = Flask(__name__)
 
@@ -33,26 +34,21 @@ def analyze_sentiment(text):
         if 'label' in result:
             return result['label']
         else:
-            logging.error("Sentiment analysis failed: No label found in result")
             return None
     except Exception as e:
         logging.error('Failed to analyze sentiment: %s', e)
         return None
 
 def detect_fraud(new_customer):
-    try:
-        same_email_count = sum(1 for issue in issues if issue.email == new_customer.email)
-        if same_email_count >= EMAIL_THRESHOLD:
-            return "Potential fraud detected: Multiple issues have been reported using the same email address within a short period."
-        
-        same_name_count = sum(1 for issue in issues if issue.name == new_customer.name)
-        if same_name_count >= NAME_THRESHOLD:
-            return "Potential fraud detected: Multiple issues have been reported using the same name within a short period."
-        
-        return None
-    except Exception as e:
-        logging.error('Failed to detect fraud: %s', e)
-        return None
+    same_email_count = sum(1 for issue in issues if issue.email == new_customer.email)
+    if same_email_count >= EMAIL_THRESHOLD:
+        return "Potential fraud detected: Multiple issues have been reported using the same email address within a short period."
+    
+    same_name_count = sum(1 for issue in issues if issue.name == new_customer.name)
+    if same_name_count >= NAME_THRESHOLD:
+        return "Potential fraud detected: Multiple issues have been reported using the same name within a short period."
+    
+    return None
 
 @app.route('/')
 def index():
@@ -69,13 +65,16 @@ def submit_issue():
         # Perform sentiment analysis on the issue description
         sentiment_label = analyze_sentiment(issue)
         
+        if sentiment_label is None:
+            return jsonify({"error": "Failed to analyze sentiment"})
+        
         # Creating a Customer object
         new_customer = Customer(name, email, item, issue, sentiment_label)
         
         # Check for fraud
         fraud_message = detect_fraud(new_customer)
         if fraud_message:
-            return fraud_message
+            return jsonify({"error": fraud_message})
         
         issues.append(new_customer)
         
@@ -86,21 +85,18 @@ def submit_issue():
         })
     except Exception as e:
         logging.error('Failed to submit issue: %s', e)
-        return jsonify({"error": "Failed to submit issue. Please try again later."}), 500
+        return jsonify({"error": "Failed to submit issue"}), 500
 
 @app.route('/view_issues')
 def view_issues():
-    try:
-        if not issues:
-            return "No issues have been submitted yet."
-        else:
-            result = "Here are the submitted issues:<br>"
-            for idx, customer in enumerate(issues, start=1):
-                result += f"Issue {idx}:<br>Name: {customer.name}<br>Email: {customer.email}<br>Item: {customer.item}<br>Issue: {customer.issue}<br>Sentiment: {customer.sentiment_label}<br><br>"
-            return result
-    except Exception as e:
-        logging.error('Failed to view issues: %s', e)
-        return jsonify({"error": "Failed to view issues. Please try again later."}), 500
+    if not issues:
+        return "No issues have been submitted yet."
+    else:
+        result = "Here are the submitted issues:<br>"
+        for idx, customer in enumerate(issues, start=1):
+            result += f"Issue {idx}:<br>Name: {customer.name}<br>Email: {customer.email}<br>Item: {customer.item}<br>Issue: {customer.issue}<br>Sentiment: {customer.sentiment_label}<br><br>"
+        return result
 
 if __name__ == '__main__':
     app.run(debug=True)
+
