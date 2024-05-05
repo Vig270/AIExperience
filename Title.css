@@ -1,0 +1,50 @@
+/* CSS styles for the body */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    animation: changeBackground 20s infinite linear; /* Animation for transitioning background */
+    color: rgb(255, 0, 0); /* Set text color to white */
+    font-family: Arial, sans-serif; /* Specify a fallback font */
+    background-size: cover; /* Ensure the background image covers the entire viewport */
+}
+
+/* Keyframes for the background transition */
+@keyframes changeBackground {
+    0% { background-image: url('alienx.png'); }
+    25% { background-image: url('alienx2.png'); }
+    50% { background-image: url('alienx3.png'); }
+    75% { background-image: url('alienx4.png'); }
+    100% { background-image: url('alienx.png'); }
+}
+
+/* Styles for h1 */
+h1 {
+    text-align: center;
+    padding: 20px;
+    font-weight: bold; /* Make h1 text bold */
+    color: rgb(10, 0, 104);
+    margin-top: 50px; /* Add some top margin to the h1 */
+}
+
+/* Styles for paragraphs */
+p {
+    padding: 10px;
+    font-weight: bold; /* Make paragraph text bold */
+    text-align: center; /* Center-align paragraphs */
+}
+
+/* Styles for links */
+a {
+    text-decoration: none;
+    color: blue; /* Set link color to blue */
+    display: block; /* Ensure the link is displayed as a block element */
+    text-align: center; /* Center-align the link */
+    margin-top: 20px; /* Add some top margin to the link */
+}
+
+/* Styles for h2 */
+h2 {
+    font-weight: bold; /* Make h2 text bold */
+    text-align: center; /* Center-align h2 */
+}

@@ -1,0 +1,37 @@
+/* CSS styles for the body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    color: #3f0061;
+    background-color: #f0f0f0;
+}
+
+/* Styles for the submitted issues section */
+#issues-list {
+    margin-top: 20px;
+}
+
+#issues-list h2 {
+    color: #3f0061;
+}
+
+/* Styles for the list of issues */
+#issues {
+    list-style-type: none;
+    padding: 0;
+}
+
+.issue-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.issue-item .sentiment-info {
+    margin-top: 10px;
+}
+
+.sentiment-label {
+    font-weight: bold;
+}
