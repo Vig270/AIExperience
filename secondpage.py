@@ -1,13 +1,10 @@
 import logging
+import datetime
 import requests
-import datetime  # Import datetime module
 from flask import Flask, request, render_template, jsonify
-from transformers import pipeline
-
 
 app = Flask(__name__)
 
-# Set up logging
 logging.basicConfig(filename='sentiment_analysis.log', level=logging.ERROR)
 
 class Customer:
@@ -23,21 +20,24 @@ issues = []
 EMAIL_THRESHOLD = 3
 NAME_THRESHOLD = 3
 
-# Initialize sentiment analysis pipeline
-classifier = pipeline(task="text-classification", model="SamLowe/roberta-base-go_emotions", top_k=None)
-
 def analyze_sentiment(text):
     try:
-        result = classifier(text)[0]
-        logging.info("Sentiment analysis result: %s", result)
-        
-        if 'label' in result:
-            return result['label']
+        response = requests.post(
+            "https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions",
+            headers={"Authorization": "Bearer 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", "Content-Type": "application/json"},
+            json={"inputs": text}
+        )
+        if response.status_code == 200:
+            result = response.json()[0]
+            logging.info("Sentiment analysis result: %s", result)
+            if 'label' in result:
+                return result['label']
         else:
-            return None
+            logging.error("Failed to analyze sentiment: %s", response.text)
     except Exception as e:
         logging.error('Failed to analyze sentiment: %s', e)
-        return None
+    return None
+
 
 def detect_fraud(new_customer):
     same_email_count = sum(1 for issue in issues if issue.email == new_customer.email)
@@ -62,23 +62,19 @@ def submit_issue():
         item = request.form['item']
         issue = request.form['issue']
         
-        # Perform sentiment analysis on the issue description
         sentiment_label = analyze_sentiment(issue)
         
         if sentiment_label is None:
             return jsonify({"error": "Failed to analyze sentiment"})
         
-        # Creating a Customer object
         new_customer = Customer(name, email, item, issue, sentiment_label)
         
-        # Check for fraud
         fraud_message = detect_fraud(new_customer)
         if fraud_message:
             return jsonify({"error": fraud_message})
         
         issues.append(new_customer)
         
-        # Returning a JSON response including sentiment analysis result
         return jsonify({
             "message": "Issue submitted successfully!",
             "sentiment_label": sentiment_label
